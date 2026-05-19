@@ -65,6 +65,7 @@ function TodoPage() {
                 taskDate: todo.taskDate
             }
         );
+        window.alert("タスクを更新しました");
 
         loadTodos();
     }
@@ -93,7 +94,9 @@ function TodoPage() {
             minHeight: "100vh",
             padding: "20px"
         }}>
+            <title>ToDoアプリ</title>
             <h1>ToDo一覧</h1>
+            <p font size="3">タスクと日付を入力してください</p>
             <input
                 value={task}
                 onChange={(e)=> setTask(e.target.value)}

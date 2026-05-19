@@ -38,7 +38,9 @@ function Register() {
             minHeight: "100vh",
             padding: "20px"
         }}>
+            <title>ToDoアプリ</title>
             <h1>ユーザ登録</h1>
+            <p font size="3">ユーザIDとパスワードを入力してください</p>
             <input
                 placeholder = "ユーザID"
                 onChange = {(e) => setUserId(e.target.value)}

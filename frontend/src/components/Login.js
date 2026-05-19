@@ -33,7 +33,9 @@ function Login() {
             minHeight: "100vh",
             padding: "20px"
         }}>
+            <title>ToDoアプリ</title>
             <h1>ログイン</h1>
+            <p font size="3">ユーザIDとパスワードを入力してください</p>
             <input
                 placeholder="UserID"
                 onChange={(e) => setUserId(e.target.value)}
