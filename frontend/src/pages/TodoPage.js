@@ -58,6 +58,7 @@ function TodoPage() {
 
         const ok = window.confirm("タスクを更新しますか？");
         if(!ok) return;
+
         await axios.put(
             `/todos/${todo.id}`,
             {
@@ -65,8 +66,8 @@ function TodoPage() {
                 taskDate: todo.taskDate
             }
         );
+        
         window.alert("タスクを更新しました");
-
         loadTodos();
     }
 
@@ -75,6 +76,8 @@ function TodoPage() {
         if(!ok) return;
         
         await axios.delete(`/todos/${id}`);
+        
+        window.alert("タスクを削除しました")
         loadTodos();
     };
 

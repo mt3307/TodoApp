@@ -27,8 +27,8 @@ function Register() {
             );
             alert("登録に成功しました");
             window.location.href = "/";
-        } catch {
-            alert("登録に失敗しました");
+        } catch (error) {
+            alert(error.response.data);
         }
     };
 

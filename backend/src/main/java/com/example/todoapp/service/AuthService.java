@@ -23,6 +23,14 @@ public class AuthService {
     }
 
     public User register(RegisterRequest request) {
+        if (userRepository.existsByUserId(request.getUserId())) {
+            throw new RuntimeException("同じユーザIDは使用できません");
+        }
+
+        if (request.getPassword().length() < 8) {
+            throw new RuntimeException("パスワードは8文字以上で入力してください");
+        }
+
         User user = new User();
         user.setUserId(request.getUserId());
         user.setPassword(request.getPassword());
