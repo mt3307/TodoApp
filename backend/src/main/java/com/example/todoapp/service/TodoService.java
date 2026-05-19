@@ -29,6 +29,7 @@ public class TodoService {
         User user = userRepository.findById(userId).orElseThrow();
         // タスクとユーザを紐づけ
         todo.setUser(user);
+        todo.setCompleted(false);
 
         return todoRepository.save(todo);
     }
