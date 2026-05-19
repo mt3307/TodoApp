@@ -76,7 +76,7 @@ function TodoPage() {
         if(!ok) return;
         
         await axios.delete(`/todos/${id}`);
-        
+
         window.alert("タスクを削除しました")
         loadTodos();
     };
@@ -110,7 +110,7 @@ function TodoPage() {
         }}>
             <title>ToDoアプリ</title>
             <h1>ToDo一覧</h1>
-            <p font size="3">タスクと日付を入力してください</p>
+            <p style={{ fontSize: "14px" }}>タスクと日付を入力してください</p>
             <input
                 value={task}
                 onChange={(e)=> setTask(e.target.value)}

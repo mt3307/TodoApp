@@ -25,8 +25,12 @@ function Register() {
                     password
                 }
             );
+            
+            setUserId("");
+            setPassword("");
             alert("登録に成功しました");
             window.location.href = "/";
+
         } catch (error) {
             alert(error.response.data);
         }
@@ -40,13 +44,15 @@ function Register() {
         }}>
             <title>ToDoアプリ</title>
             <h1>ユーザ登録</h1>
-            <p font size="3">ユーザIDとパスワードを入力してください</p>
+            <p style={{ fontSize: "14px" }}>ユーザIDとパスワードを入力してください</p>
             <input
+                value={userId}
                 placeholder = "ユーザID"
                 onChange = {(e) => setUserId(e.target.value)}
              />
              <input
                 type="password"
+                value={password}
                 placeholder = "パスワード"
                 onChange = {(e) => setPassword(e.target.value)}
              />

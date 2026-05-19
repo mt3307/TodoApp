@@ -35,12 +35,14 @@ function Login() {
         }}>
             <title>ToDoアプリ</title>
             <h1>ログイン</h1>
-            <p font size="3">ユーザIDとパスワードを入力してください</p>
+            <p style={{ fontSize: "14px" }}>ユーザIDとパスワードを入力してください</p>
             <input
+                value={userId}
                 placeholder="UserID"
                 onChange={(e) => setUserId(e.target.value)}
             />
             <input
+                value={password}
                 type="password"
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
