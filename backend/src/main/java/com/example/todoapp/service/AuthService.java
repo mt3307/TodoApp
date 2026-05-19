@@ -15,13 +15,17 @@ public class AuthService {
 
     private final UserRepository userRepository;
 
+    // ログイン処理
     public User login(LoginRequest request) {
 
+        // ユーザ検索
         return userRepository.findByUserId(request.getUserId())
+                // パスワード一致を確認
                 .filter(user -> user.getPassword().equals(request.getPassword()))
                 .orElse(null);
     }
 
+    // 新規ユーザ登録
     public User register(RegisterRequest request) {
         if (userRepository.existsByUserId(request.getUserId())) {
             throw new RuntimeException("同じユーザIDは使用できません");

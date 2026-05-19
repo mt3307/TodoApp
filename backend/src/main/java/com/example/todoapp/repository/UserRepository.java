@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.todoapp.entity.User;
 
+//JPAでDB操作
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUserId(String userId);

@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import axios from "../api/axios";
 
 function TodoPage() {
+    //ログイン時に保存したユーザの取り出し
     const user = JSON.parse(
         localStorage.getItem("user")
     );
@@ -10,16 +11,20 @@ function TodoPage() {
     const [task, setTask] = useState("");
     const [taskDate, setTaskDate] = useState("");
 
+    //DBからToDo一覧を取得
     const loadTodos = async() => {
         const res = await axios.get(`/todos/${user.id}`);
+        //取得した一覧をStateに保存
         setTodos(res.data);
     };
 
+    //画面初回表示時のみ実行
     useEffect(() => {
         loadTodos();
         // eslint-disable-next-line
     }, []);
 
+    //新規タスク登録
     const addTodo = async () => {
         if(task.trim() === "") {
             window.confirm("タスクを入力してください");
@@ -39,11 +44,14 @@ function TodoPage() {
         );
 
         window.alert("タスクを登録しました")
+        //登録後、入力フォームをクリア
         setTask("");
         setTaskDate("");
+        //一覧更新
         loadTodos();
     };
 
+    //タスク更新処理
     const updateTodo = async (todo) => {
         const newTask = window.prompt(
             "新しいタスクを入力してください",
@@ -71,6 +79,7 @@ function TodoPage() {
         loadTodos();
     }
 
+    //タスク削除処理
     const deleteTodo = async (id) => {
         const ok = window.confirm("本当に削除しますか？");
         if(!ok) return;
@@ -81,6 +90,7 @@ function TodoPage() {
         loadTodos();
     };
 
+    //チェックボックスのチェック切り替え
     const toggleComplete = async (todo) => {
         await axios.put(
             `/todos/${todo.id}`,
@@ -94,10 +104,12 @@ function TodoPage() {
         loadTodos();
     }
 
+    //ログアウト処理
     const logout = () => {
         const ok = window.confirm("ログアウトしますか？")
 
         if(!ok) return;
+        //保存済みログイン情報の削除
         localStorage.removeItem("user");
         window.location.href = "/";
     }
@@ -124,7 +136,8 @@ function TodoPage() {
              />
              <button onClick={addTodo}>登録</button>
              <hr />
-             {
+             {  
+                //タスク一覧をループ取得、表示
                 todos.map(todo => (
                     <div key={todo.id}
                          style={{

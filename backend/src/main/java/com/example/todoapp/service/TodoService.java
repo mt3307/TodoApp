@@ -17,19 +17,23 @@ public class TodoService {
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
 
+    // 一覧取得
     public List<Todo> getTodos(Long userId) {
         User user = userRepository.findById(userId).orElseThrow();
 
         return todoRepository.findByUserOrderByTaskDateAsc(user);
     }
 
+    // 新規登録
     public Todo addTodo(Long userId, Todo todo) {
         User user = userRepository.findById(userId).orElseThrow();
+        // タスクとユーザを紐づけ
         todo.setUser(user);
 
         return todoRepository.save(todo);
     }
 
+    // 更新処理
     public Todo updateTodo(Long id, Todo newTodo) {
         Todo todo = todoRepository.findById(id).orElseThrow();
         todo.setTask(newTodo.getTask());
@@ -39,6 +43,7 @@ public class TodoService {
         return todoRepository.save(todo);
     }
 
+    // 削除処理
     public void deleteTodo(Long id) {
         todoRepository.deleteById(id);
     }

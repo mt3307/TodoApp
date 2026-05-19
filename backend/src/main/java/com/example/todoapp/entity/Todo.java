@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 
 import lombok.Data;
 
+//テーブル定義（todos）
 @Entity
 @Table(name = "todos")
 @Data
@@ -23,7 +24,7 @@ public class Todo {
     private LocalDate taskDate;
     private Boolean completed = false;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne // 1ユーザ対多タスク
+    @JoinColumn(name = "user_id") // 外部キー
     private User user;
 }

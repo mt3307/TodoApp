@@ -14,6 +14,7 @@ import com.example.todoapp.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
 
+//API受付
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -21,7 +22,9 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
     private final AuthService authService;
 
+    // フロントエンドからHTTPリクエストを受付
     @PostMapping("/login")
+    // JSON受け取り
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         User user = authService.login(request);
 
@@ -29,9 +32,11 @@ public class AuthController {
             return ResponseEntity.badRequest().body("ログイン失敗");
         }
 
+        // HTTPレスポンスを返却
         return ResponseEntity.ok(user);
     }
 
+    // 登録用API受付
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
 
