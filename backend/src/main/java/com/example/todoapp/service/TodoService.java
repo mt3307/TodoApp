@@ -34,6 +34,7 @@ public class TodoService {
         Todo todo = todoRepository.findById(id).orElseThrow();
         todo.setTask(newTodo.getTask());
         todo.setTaskDate(newTodo.getTaskDate());
+        todo.setCompleted(newTodo.getCompleted());
 
         return todoRepository.save(todo);
     }

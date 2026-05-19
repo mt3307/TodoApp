@@ -21,6 +21,7 @@ public class Todo {
     private Long id;
     private String task;
     private LocalDate taskDate;
+    private Boolean completed = false;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

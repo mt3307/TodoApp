@@ -70,8 +70,6 @@ function TodoPage() {
         loadTodos();
     }
 
-
-
     const deleteTodo = async (id) => {
         const ok = window.confirm("本当に削除しますか？");
         if(!ok) return;
@@ -79,6 +77,19 @@ function TodoPage() {
         await axios.delete(`/todos/${id}`);
         loadTodos();
     };
+
+    const toggleComplete = async (todo) => {
+        await axios.put(
+            `/todos/${todo.id}`,
+            {
+                task: todo.task,
+                taskDate: todo.taskDate,
+                completed: !todo.completed
+            }
+        );
+
+        loadTodos();
+    }
 
     const logout = () => {
         const ok = window.confirm("ログアウトしますか？")
@@ -120,7 +131,13 @@ function TodoPage() {
                             marginBottom: "10px"
                          }}
                     >
-                    <div style={{width: "150px"}}>
+                    <input type="checkbox"
+                           checked={todo.completed}
+                           onChange={() => toggleComplete(todo)}
+                    />
+                    <div style={{width: "150px",
+                                textDecoration: todo.completed ?"line-through" :"none"
+                                }}>
                         {todo.task}
                     </div>
                     <div style={{width: "120px"}}>
