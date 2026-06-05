@@ -104,6 +104,13 @@ function TodoPage() {
         loadTodos();
     }
 
+    //Excelをダウンロードする機能
+    const exportExcel = () => {
+        window.open(
+            `http://localhost:8080/excel/${user.id}`,"_blank"
+        );
+    };
+
     //ログアウト処理
     const logout = () => {
         const ok = window.confirm("ログアウトしますか？")
@@ -172,7 +179,10 @@ function TodoPage() {
                 }}
             />
             <hr />
-            <button onClick={logout}>ログアウト</button>
+            <div style={{display:"flex", gap:"10px"}}>
+                <button onClick={exportExcel}>Excel出力</button>
+                <button onClick={logout}>ログアウト</button>
+            </div>
         </div>
     );
 }
