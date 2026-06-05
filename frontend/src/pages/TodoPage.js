@@ -2,10 +2,15 @@ import {useEffect, useState} from "react";
 import axios from "../api/axios";
 
 function TodoPage() {
+    
     //ログイン時に保存したユーザの取り出し
     const user = JSON.parse(
         localStorage.getItem("user")
     );
+    //アクセス制御
+    if (!user) {
+        window.location.href = "/";
+    }
 
     const [todos, setTodos] = useState([]);
     const [task, setTask] = useState("");
