@@ -2,14 +2,24 @@ import {useEffect, useState} from "react";
 import axios from "../api/axios";
 
 function TodoPage() {
+    
     //ログイン時に保存したユーザの取り出し
     const user = JSON.parse(
         localStorage.getItem("user")
     );
+    //アクセス制御
+    if (!user) {
+        window.location.href = "/";
+    }
 
     const [todos, setTodos] = useState([]);
     const [task, setTask] = useState("");
     const [taskDate, setTaskDate] = useState("");
+
+    const today = new Date();
+    const totalCount = todos.length;
+    const completedCount = todos.filter(todo => todo.completed).length;
+    const incompletedCount = totalCount - completedCount;
 
     //DBからToDo一覧を取得
     const loadTodos = async() => {
@@ -24,12 +34,22 @@ function TodoPage() {
         // eslint-disable-next-line
     }, []);
 
+    //タスクの期限切れを判定
+    const isExpired = (taskDate) => {
+        return new Date(taskDate) < today;
+    }
+
     //新規タスク登録
     const addTodo = async () => {
         if(task.trim() === "") {
             window.confirm("タスクを入力してください");
             return;
         }
+
+        if(task.length > 50) {
+            window.alert("タスクは50文字以内で入力してください");
+            return;
+        } 
 
         if(taskDate === "") {
             window.alert("日付を入力してください")
@@ -61,6 +81,11 @@ function TodoPage() {
         if(newTask === null) return;
         if(newTask.trim() === "") {
             window.alert("タスクを入力してください");
+            return;
+        }
+
+        if(newTask.length > 50) {
+            window.alert("タスクは50文字以内で入力してください");
             return;
         }
 
@@ -129,10 +154,16 @@ function TodoPage() {
         }}>
             <title>ToDoアプリ</title>
             <h1>ToDo一覧</h1>
-            <p style={{ fontSize: "14px" }}>タスクと日付を入力してください</p>
+            <div style={{marginBottom:"20px", fontWeight:"bold"}}>    
+                <p>総件数：{totalCount}件</p>
+                <p>完了：{completedCount}件</p>
+                <p>未完了件：{incompletedCount}</p>
+            </div>
+            <p style={{ fontSize: "14px" }}>タスクと日付を入力してください {task.length}/50文字</p>
             <input
                 value={task}
                 onChange={(e)=> setTask(e.target.value)}
+                maxLength={50}
                 placeholder="タスク"
              />
              <input
@@ -151,7 +182,11 @@ function TodoPage() {
                             display: "flex",
                             alignItems: "center",
                             gap: "10px",
-                            marginBottom: "10px"
+                            marginBottom: "10px",
+                            color:
+                                isExpired(todo.taskDate) && !todo.completed ? "red" : "black",
+                            fontweight: 
+                                isExpired(todo.taskDate) && !todo.completed ? "bold" : "normal"
                          }}
                     >
                     <input type="checkbox"

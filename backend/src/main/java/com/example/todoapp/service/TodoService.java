@@ -31,11 +31,22 @@ public class TodoService {
         todo.setUser(user);
         todo.setCompleted(false);
 
+        // バリデーション
+        if (todo.getTask().length() > 50) {
+            throw new RuntimeException("タスクは50文字以内です");
+        }
+
         return todoRepository.save(todo);
     }
 
     // 更新処理
     public Todo updateTodo(Long id, Todo newTodo) {
+
+        // バリデーション
+        if (newTodo.getTask().length() > 50) {
+            throw new RuntimeException("タスクは50文字以内です");
+        }
+
         Todo todo = todoRepository.findById(id).orElseThrow();
         todo.setTask(newTodo.getTask());
         todo.setTaskDate(newTodo.getTaskDate());
