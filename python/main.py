@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.responses  import FileResponse
 from sqlalchemy import create_engine
@@ -67,7 +69,11 @@ def export_excel(user_id: int):
             ]
         )   
 
-    filename = f"todo_{user_id}.xlsx"
+    os.makedirs(
+        "__Excel",
+        exist_ok=True
+    )
+    filename = f"__Excel/todo_{user_id}.xlsx"
     wb.save(filename)
 
     return FileResponse(
