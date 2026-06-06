@@ -7,6 +7,8 @@ import com.example.todoapp.dto.RegisterRequest;
 import com.example.todoapp.entity.User;
 import com.example.todoapp.repository.UserRepository;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     // ログイン処理
     public User login(LoginRequest request) {
@@ -21,7 +24,7 @@ public class AuthService {
         // ユーザ検索
         return userRepository.findByUserId(request.getUserId())
                 // パスワード一致を確認
-                .filter(user -> user.getPassword().equals(request.getPassword()))
+                .filter(user -> passwordEncoder.matches(request.getPassword(), user.getPassword()))
                 .orElse(null);
     }
 
@@ -37,7 +40,7 @@ public class AuthService {
 
         User user = new User();
         user.setUserId(request.getUserId());
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword())); // パスワードを暗号化
 
         return userRepository.save(user);
     }

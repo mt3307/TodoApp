@@ -32,7 +32,13 @@ function Register() {
             window.location.href = "/";
 
         } catch (error) {
-            alert(error.response.data);
+            console.error(error);
+
+            if (error.response) {
+                alert(error.response.data);
+            } else {
+                alert("サーバ接続エラー");
+            }
         }
     };
 
