@@ -136,6 +136,14 @@ function TodoPage() {
         );
     };
 
+    //ページ最上部へ戻る関数
+    const scrollToTop = () => {
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+    };
+
     //ログアウト処理
     const logout = () => {
         const ok = window.confirm("ログアウトしますか？")
@@ -159,22 +167,32 @@ function TodoPage() {
                 <p>完了：{completedCount}件</p>
                 <p>未完了件：{incompletedCount}</p>
             </div>
-            <p style={{ fontSize: "14px" }}>タスクと日付を入力してください {task.length}/50文字</p>
+            <p style={{ fontSize: "14px" }}>タスクと日付を入力してください （{task.length}/50文字）</p>
             <input
                 value={task}
                 onChange={(e)=> setTask(e.target.value)}
                 maxLength={50}
                 placeholder="タスク"
-             />
-             <input
+            />
+            <input
                 type="date"
                 value={taskDate}
                 onChange={(e)=> setTaskDate(e.target.value)}
                 placeholder="タスク"
-             />
-             <button onClick={addTodo}>登録</button>
-             <hr />
-             {  
+            />
+            <button 
+                onClick={addTodo}
+                style={{
+                    backgroundColor:"#4CAF50",
+                    coloer:"white",
+                    border:"none",
+                    padding:"8px 16px",
+                    borderRadius:"5px",
+                    cursor:"pointer"
+                }}>登録
+            </button>
+            <hr />
+            {  
                 //タスク一覧をループ取得、表示
                 todos.map(todo => (
                     <div key={todo.id}
@@ -201,11 +219,31 @@ function TodoPage() {
                     <div style={{width: "120px"}}>
                         {todo.taskDate}
                     </div>
-                        <button onClick={()=> updateTodo(todo)}>編集</button>
-                        <button onClick={()=> {deleteTodo(todo.id)}}>削除</button>
+                        <button 
+                            onClick={()=> updateTodo(todo)}
+                            style={{
+                                backgroundColor:"#2196F3",
+                                color:"white",
+                                border:"none",
+                                padding:"5px 12px",
+                                borderRadius:"5px",
+                                curor:"pointer"
+                            }}>編集
+                        </button>
+                        <button 
+                            onClick={()=> {deleteTodo(todo.id)}}
+                            style={{
+                                backgroundColor:"#f44336",
+                                color:"white",
+                                border:"none",
+                                padding:"5px 12px",
+                                borderRadius:"5px",
+                                cursor:"pointer"
+                            }}>削除
+                        </button>
                     </div>
                 ))
-             }
+            }
             <div
                 style={{
                     display:"flex",
@@ -215,9 +253,46 @@ function TodoPage() {
             />
             <hr />
             <div style={{display:"flex", gap:"10px"}}>
-                <button onClick={exportExcel}>Excel出力</button>
-                <button onClick={logout}>ログアウト</button>
+                <button 
+                    onClick={exportExcel}
+                    style={{
+                        backgroundColor:"#1D6F42",
+                        color:"white",
+                        border:"none",
+                        padding:"8px 16px",
+                        borderRadius:"5px",
+                        cursor:"pointer"
+                    }}>Excel出力
+                </button>
+                <button 
+                    onClick={logout}
+                    style={{
+                        backgroundColor:"#666",
+                        color:"white",
+                        border:"none",
+                        padding:"8px 16px",
+                        borderRadius:"5px",
+                        cursor:"pointer"
+                    }}>ログアウト
+                </button>
             </div>
+            <button
+                onClick={scrollToTop}
+                style={{
+                    position:"fixed",
+                    bottom:"20px",
+                    right:"20px",
+                    backgroundColor:"#2196F3",
+                    color:"white",
+                    border:"none",
+                    borderRadius:"50%",
+                    width:"50px",
+                    height:"50px",
+                    cursor:"pointer",
+                    fontsize:"20px",
+                    boxShadow: "0 2px 5px rgba(0,0,0,0.3)"
+                }}
+            >↑TOP</button>
         </div>
     );
 }

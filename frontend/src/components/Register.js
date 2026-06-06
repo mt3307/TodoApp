@@ -49,16 +49,26 @@ function Register() {
                 value={userId}
                 placeholder = "ユーザID"
                 onChange = {(e) => setUserId(e.target.value)}
-             />
-             <input
+            />
+            <input
                 type="password"
                 value={password}
                 placeholder = "パスワード"
                 onChange = {(e) => setPassword(e.target.value)}
-             />
-             <button onClick={register}>登録</button>
-             <hr />
-             <a href="/">戻る</a>
+            />
+            <button 
+                onClick={register}
+                style={{
+                    backgroundColor:"#C0C0C0",
+                    coloer:"white",
+                    border:"none",
+                    padding:"8px 16px",
+                    borderRadius:"5px",
+                    cursor:"pointer"
+                }}>登録
+            </button>
+            <hr />
+            <a href="/">戻る</a>
         </div>
     );
 }

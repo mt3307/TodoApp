@@ -31,8 +31,7 @@ function Login() {
         <div style={{
             backgroundColor: "#e6f7ff",
             minHeight: "100vh",
-            padding: "20px"
-        }}>
+            padding: "20px"}}>
             <title>ToDoアプリ</title>
             <h1>ログイン</h1>
             <p style={{ fontSize: "14px" }}>ユーザIDとパスワードを入力してください</p>
@@ -47,13 +46,20 @@ function Login() {
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={login}>ログイン</button>
+            <button 
+                onClick={login}
+                style={{
+                    backgroundColor:"#C0C0C0",
+                    coloer:"white",
+                    border:"none",
+                    padding:"8px 16px",
+                    borderRadius:"5px",
+                    cursor:"pointer"
+                }}>ログイン
+            </button>
             <br />
             <hr />
-            <div style={{
-                    justifyContent:"space-between",
-                    alignItems:"center"
-                }}>
+            <div style={{justifyContent:"space-between",alignItems:"center"}}>
             <a href="/register">初回登録はこちら</a>
             </div>
         </div>
