@@ -18,7 +18,6 @@ function TodoPage() {
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
 
-    const today = new Date();
     const totalCount = todos.length;
     const completedCount = todos.filter(todo => todo.completed).length;
     const incompletedCount = totalCount - completedCount;
@@ -38,7 +37,8 @@ function TodoPage() {
 
     //タスクの期限切れを判定
     const isExpired = (taskDate) => {
-        return new Date(taskDate) < today;
+        const today = new Date().toISOString().split("T")[0]; //取得した日付を文字列（YYYY-MM-DD）にして比較（例："2026-06-06"）
+        return taskDate < today;
     }
 
     //新規タスク登録
@@ -235,7 +235,7 @@ function TodoPage() {
                             marginBottom: "10px",
                             color:
                                 isExpired(todo.taskDate) && !todo.completed ? "red" : "black",
-                            fontweight: 
+                            fontWeight: 
                                 isExpired(todo.taskDate) && !todo.completed ? "bold" : "normal"
                          }}
                     >
