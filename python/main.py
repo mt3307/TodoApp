@@ -4,7 +4,9 @@ from fastapi import FastAPI
 from fastapi.responses  import FileResponse
 from sqlalchemy import create_engine
 from sqlalchemy import text
-from openpyxl import Workbook # type: ignore
+from openpyxl import Workbook
+from openpyxl.styles import PatternFill
+from datetime import date
 
 app = FastAPI()
 
@@ -59,15 +61,57 @@ def export_excel(user_id: int):
         ]
     )
 
+    red_fill = PatternFill(
+        fill_type="solid",
+        start_color="FFCCCC",
+        end_color="FFCCCC"  
+    ) 
+
+    today = date.today()
+    print("today=", today)
     for todo in todos:
+
+        print(todo.task_date, type(todo.task_date))
+        print(todo.completed, type(todo.completed))
+
+        status = "完了" if todo.completed else "未完了"
         ws.append(
             [
                 todo.id,
                 todo.task,
                 str(todo.task_date),
-                "完了" if todo.completed else "未完了"
+                status
             ]
-        )   
+        )
+
+        current_row = ws.max_row
+        if (todo.task_date < today and not todo.completed) :
+            for cell in ws[current_row]:
+                cell.fill = red_fill
+    
+    total_count = len(todos)
+    completed_count = sum(
+        1 for todo in todos
+        if todo.completed
+    )
+
+    incompleted_count = (
+        total_count - completed_count
+    )
+
+    ws.append([])
+    ws.append(["----- 集計情報 -----"])
+    ws.append(["総件数", total_count])
+    ws.append(["完了件数", completed_count])
+    ws.append(["未完了件数", incompleted_count])
+
+    if total_count == 0:
+        completion_rate = 0
+    else:
+        completion_rate = round(
+            completed_count / total_count * 100, 1
+        )
+    ws.append(["完了率", f"{completion_rate}%"])
 
     os.makedirs(
         "__Excel",
