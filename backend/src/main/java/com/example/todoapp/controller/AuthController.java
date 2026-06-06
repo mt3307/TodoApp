@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.todoapp.dto.LoginRequest;
 import com.example.todoapp.dto.RegisterRequest;
+import com.example.todoapp.dto.ChangePasswordRequest;
 import com.example.todoapp.entity.User;
 import com.example.todoapp.service.AuthService;
 
@@ -42,6 +43,17 @@ public class AuthController {
 
         try {
             return ResponseEntity.ok(authService.register(request));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // パスワード変更のリクエストを受け付ける
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request) {
+        try {
+            authService.changePassword(request);
+            return ResponseEntity.ok("パスワード変更成功");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

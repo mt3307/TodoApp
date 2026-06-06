@@ -37,13 +37,13 @@ function Login() {
             <p style={{ fontSize: "14px" }}>ユーザIDとパスワードを入力してください</p>
             <input
                 value={userId}
-                placeholder="UserID"
+                placeholder="ユーザID"
                 onChange={(e) => setUserId(e.target.value)}
             />
             <input
                 value={password}
                 type="password"
-                placeholder="Password"
+                placeholder="パスワード"
                 onChange={(e) => setPassword(e.target.value)}
             />
             <button 

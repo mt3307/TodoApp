@@ -15,6 +15,8 @@ function TodoPage() {
     const [todos, setTodos] = useState([]);
     const [task, setTask] = useState("");
     const [taskDate, setTaskDate] = useState("");
+    const [currentPassword, setCurrentPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
 
     const today = new Date();
     const totalCount = todos.length;
@@ -154,6 +156,36 @@ function TodoPage() {
         window.location.href = "/";
     }
 
+    //パスワード変更の関数
+    const changePassword = async() => {
+        try {
+            await axios.post("/auth/change-password", 
+                {
+                    userId: user.id,
+                    currentPassword,
+                    newPassword
+                }
+            );
+
+            alert("パスワード変更成功");
+            setCurrentPassword("");
+            setNewPassword("");
+
+        } catch (error) {
+            if (error.response) {
+                alert(error.response.data);
+            }
+        }
+    };
+
+    /*デバッグ用
+    console.log({
+        task,
+        taskDate,
+        todos,
+        user
+    });*/
+
     return (
         <div style={{
             backgroundColor: "#fff9cc",
@@ -186,7 +218,7 @@ function TodoPage() {
                     backgroundColor:"#4CAF50",
                     coloer:"white",
                     border:"none",
-                    padding:"8px 16px",
+                    padding:"5px 12px",
                     borderRadius:"5px",
                     cursor:"pointer"
                 }}>登録
@@ -251,6 +283,31 @@ function TodoPage() {
                     alignItems:"center"
                 }}
             />
+            <hr />
+            <h3>パスワード変更</h3>
+            <input 
+                type="password"
+                placeholder="現在のパスワード"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+            />
+            <input
+                type="password"
+                placeholder="新しいパスワード"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <button
+                onClick={changePassword}
+                style={{
+                    backgroundColor:"#f44336",
+                    color:"white",
+                    border:"none",
+                    padding:"5px 12px",
+                    borderRadius:"5px",
+                    cursor:"pointer"
+                }}>パスワード変更   
+            </button>
             <hr />
             <div style={{display:"flex", gap:"10px"}}>
                 <button 
